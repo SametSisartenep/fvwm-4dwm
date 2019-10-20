@@ -1,0 +1,395 @@
+# 4fvm Version 1.2
+# by Yaxkukmo
+#################
+# Image path 
+#################
+#
+
+ImagePath $[HOME]/.fvwm/icons:+
+InfoStoreAdd terminal xterm
+
+Colorset 8 fg black, bg #a0a0a0
+Colorset 13 fg black, bg black
+Colorset 10 fg black, bg #808080
+Colorset 11 fg black, bg #b0b0b0
+# inactive windows
+Colorset 15 fg #404040, bg  #808080, sh #292929
+Colorset 3 fg #404040, bg  #808080
+# active windows
+Colorset 16 fg #404040, bg  #a59f80
+Colorset 17 fg #404040, bg #808080, pixmap unknown.xpm
+
+#
+#################
+# style for toolchest and sticky applications
+#################
+#
+
+Style toolchest Title, !Handles, WindowShadeShrinks, !Button 1, !Button 2, !Button 4, !Closable, Sticky, !StickyStippledTitle, WindowListSkip
+Style panel NoTitle, !Borders, HandleWidth 0, BorderWidth 0,!Handles, !Button 1, !Button 2, !Button 4, !Closable, Sticky, !StickyStippledTitle, WindowListSkip
+Style FvwmButtons Title, !Handles, WindowShadeShrinks, !Button 1, !Button 2, !Button 4, Sticky, !StickyStippledTitle, WindowListSkip, !Closable
+Style *FvwmPager Title, Handles, WindowShadeShrinks, Button 1, !Button 2, Button 4, Sticky, !StickyStippledTitle, WindowListSkip
+Style Clock Title, Handles, WindowShadeShrinks, Button 1, !Button 2, !Button 4, Sticky, !StickyStippledTitle, WindowListSkip, !Closable, Borders, Sticky
+Style xtdesktop NoTitle, NoHandles, Sticky, WindowListSkip, staysOnBottom
+Style *Screenlet*  !Title, !Handles, WindowShadeShrinks, !Button 1, !Button 2, !Button 4, !Closable, Sticky, !StickyStippledTitle, WindowListSkip, !Closable
+
+#
+#################
+# red cursors -> works fine on Slackware
+#################
+#
+
+CursorStyle ROOT left_ptr red white
+CursorStyle STROKE plus red white
+CursorStyle LEFT_EDGE left_side red white
+CursorStyle BOTTOM_EDGE bottom_side red white
+CursorStyle RIGHT_EDGE right_side red white
+CursorStyle BOTTOM_RIGHT bottom_right_corner red white
+CursorStyle BOTTOM_LEFT bottom_left_corner red white
+CursorStyle TOP_RIGHT top_right_corner red white
+CursorStyle TOP_LEFT top_left_corner red white
+CursorStyle LEFT left_side red white
+CursorStyle BOTTOM bottom_side red white
+CursorStyle RIGHT right_side red white
+CursorStyle TOP top_side red white
+CursorStyle DESTROY pirate red white
+CursorStyle SELECT crosshair red white
+CursorStyle MENU top_left_arrow red white
+CursorStyle WAIT watch red white
+CursorStyle RESIZE sizing red white
+CursorStyle MOVE fleur red white
+CursorStyle SYS hand2 red white
+CursorStyle DEFAULT top_left_arrow red white
+CursorStyle TITLE top_left_arrow red white
+CursorStyle POSITION top_left_corner red white
+
+
+OpaqueMoveSize -1
+Style * SnapAttraction 4 Icons ScreenIcons
+Style * SnapGrid 100 1000
+EdgeScroll 0 0
+MoveThreshold 3
+BugOpts FlickeringMoveWorkAround On
+
+#
+#################
+# here we got SGI colors and font for windows and menu
+#################
+#
+DefaultFont "xft:Sans:Bold:pixelsize=12:antialias=false:Italic"
+Style *  Handles, HandleWidth 3
+TitleStyle LeftJustified
+TitleStyle Height 20
+Style * NoDecorHint
+Style * GNOMEIgnoreHints
+Style * Colorset 15
+Style * HilightColorset 16
+Style * MwmBorder, MwmFunctions, Layer
+MenuStyle * TrianglesRelief, PopupOffset -5 -1
+MenuStyle * HilightBack #a3a3a3
+MenuStyle * MenuColorset 11
+MenuStyle * Hilight3DThin
+MenuStyle * !SeparatorsLong
+MenuStyle * BorderWidth 1
+
+
+#
+#################
+# Click on window to grab the focus
+#################
+#
+#Style * MouseFocusClickRaises
+Style * ClickToFocus
+
+#
+#################
+# Here are vector buttons and width of the border and hadlers
+#ButtonStyle 2			\
+#################
+#
+
+ButtonStyle 2			\
+	Vector 9 0+5px100-6p@3 100-7px100-6p@3 \
+	100-7px-0+4p@3 0+5px0+4p@3 0+5px100-5p@3 \
+	0+7px100-5p@2 \
+	0+8px100-5p@3 100-6px100-5p@3 100-6px-0+6p@3
+ButtonStyle 4 			\
+ 	Vector 9 50-2px50+1p@3 50+2px50+1p@3 50+2px50-3p@3 50-2px50-3p@3 50-2px50+2p@3 \
+	50-0px50+2p@2 \
+	50-0px50+2p@3 50+3px50+2p@3 50+3px50-1p@3
+ButtonStyle 1			\
+	Vector 9 0+4px50+1p@3 100-6px50+1p@3 100-6px50-2p@3 0+4px50-2p@3 0+4px50+2@3 \
+	0+5px50+2p@2 \
+	0+6px50+2p@2 100-5px50+2p@3 100-5px50@3
+
+
+DestroyFunc 4dwmShowDesktop
+AddToFunc   4dwmShowDesktop
++ I All (CurrentPage, Iconic, State 1) 4dwmRestoreDesktop
++ I TestRc (Match) Break
++ I All (CurrentPage, !Iconic, !Sticky, !State 1) ThisWindow State 1 True
++ I All (CurrentPage, !Iconic, !Sticky, State 1) Iconify
+
+DestroyFunc 4dwmRestoreDesktop
+AddToFunc   4dwmRestoreDesktop
++ I All (CurrentPage, Iconic, State 1) Iconify off
++ I All (CurrentPage, State 1) ThisWindow State 1 False
+
+DestroyFunc 4dwmMaximize
+AddToFunc   4dwmMaximize
++ M Move
++ C Raise
++ D Maximize 100 100
+
+#
+#################
+# What should be done after click on particular button
+#################
+#
+Mouse 0 1 A Menu WindowMenu Close
+Mouse 0 2 A Maximize 100 100
+Mouse 0 4 A Iconify
+Mouse 1 I A DeiconifyAndRearrange
+Mouse 1 R A Menu FvwmMenuRoot
+Mouse 1 T A Function 4dwmMaximize
+
+#
+#################
+# setting Icons
+#################
+#
+Style * SnapGrid 1
+BugOpts RaiseOverUnmanaged on
+EdgeScroll 0 0
+EdgeResistance 200
+EdgeThickness 1
+Style * IconTitleFormat %i
+#Style * TitleFormat %n
+
+Style * IconBox 1000x200+240+0, IconGrid 1 1, IconFill Left Top
+Style * IconSize 85 70
+Style * IconBackgroundColorset 17 
+Style * IconBackgroundRelief 1 
+Style * IconTitleRelief 1 
+Style * IconBackgroundPadding 1
+Style * IconTitle
+Style * WindowShadeSteps 0
+Style * IconFont "xft:Sans:Bold:pixelsize=11:antialias=false"
+
+
+#
+#################
+# Icons applications
+#################
+#
+Style * IconOverride
+Style * DecorateTransient
+Style xterm Icon term.png
+Style Winterm Icon term.png
+DefaultIcon term.png
+#
+# iconify and deiconify
+#
+
+DestroyFunc DeiconifyAndRearrange
+AddToFunc DeiconifyAndRearrange
+ + C Iconify off
+ + C All (CurrentPage, Iconic) PlaceAgain Icon
+ + M Move
+
+DestroyFunc IconFunc
+AddToFunc IconFunc
+ + C DeiconifyAndRearrange
+ + M Raise
+ + M Move
+ + D DeiconifyAndRearrange
+
+Mouse 1 I A DeiconifyAndRearrange
+
+#
+#################
+# Root menu
+#################
+#
+
+DestroyMenu "FvwmMenuRoot"
+AddToMenu "FvwmMenuRoot" "Root Menu" Title
++ "Show Desktop" Function 4dwmShowDesktop
++ " E&xit 4Dwm " Popup FvwmExitFvwmPopup
++ " Exit System " Popup FvwmExitSystem
+
+DestroyMenu "FvwmExitFvwmPopup"
+AddToMenu FvwmExitFvwmPopup "Exit 4Dwm?" Title
++ "&Restart"   Restart fvwm -f $HOME/.fvwm/fvwmrc
++ "&Quit"      Module FvwmForm FvwmForm-QuitVerify
+
+DestroyMenu "FvwmExitSystem"
+AddToMenu FvwmExitSystem "Exit System?" Title
++ "System Restart"	Exec exec $[infostore.terminal] -n "System Reboot" -T "System Reboot" -e sudo reboot
++ "System Halt"		Exec exec $[infostore.terminal] -n "System Halt" -T "System Halt" -e sudo poweroff
+
+#
+#################
+# SGI window menu
+#################
+#
+
+DestroyMenu WindowMenu
+AddToMenu WindowMenu
++ " Window Options "				Title
++ "&Iconify"		Iconify On
++ "R&aise"		Raise
++ "&Lower"		Lower
++ "Stick"		Stick
++ "Shade"		WindowShade North
++ "Ma&ximize"	Maximize 0 93
++ "I&dentify"	Module FvwmIdent
++ ""					Nop
++ "Kill Window"			Destroy
++ "Exit Window"		Delete
+
+#
+# Definition for  multiple desktop
+#
+
+DesktopSize 2x2
+DestroyModuleConfig FvwmPager: *
+*FvwmPager: Colorset * 1
+*FvwmPager: WindowColorsets 2 10
+*FvwmPager: Window3DBorders
+*FvwmPager: SmallFont "xft:Sans:pixelsize=7:antialias=false:Italic"
+*FvwmPager: Hilight  #a59f80
+*FvwmPager: DeskHilight
+*FvwmPager: SolidSeparators
+*FvwmPager: BalloonFont "xft:Sans:pixelsize=10:antialias=false"
+*FvwmPager: Balloons All
+*FvwmPager: BalloonYOffset +2
+*FvwmPager: BalloonBorderWidth 1
+*FvwmPager: UseSkipList
+*FvwmPager: MoveThreshold 3
+*FvwmPager: BalloonStringFormat %r
+*FvwmPager: WindowBorderWidth 1
+*FvwmPager: NoMiniIcons
+*FvwmPager: Geometry 150x90-5-5
+
+DestroyModuleConfig FvwmBanner: *
+*FvwmBanner: NoDecor
+*FvwmBanner: Pixmap $HOME/.fvwm/sgi_logo.xpm
+
+#
+#  Getting toolchest 
+#
+
+Style Toolchest !Borders
+Style Toolchest BorderColorSet 13
+Style Toolchest HilightBorderColorSet 13
+
+DestroyMenu "ToolDesktop"
+AddToMenu "ToolDesktop" 
++ "Customize" 		Popup ToolCustomize
++ "Open Unix Shell"	Exec exec $[infostore.terminal] -n winterm -T winterm -g 80x24
++ "Open Admin Shell"	Exec exec $[infostore.terminal] -n Adminterm -T Adminterm -g 80x24 -bg \#440000 -fg \#eeeeee -e sudo -s /bin/mksh
++ "Open 4Dwm Console" 	Module FvwmConsole
+#+ "Lock Desktop" 	Nop
++ "" 			Nop
++ "Pager"			 Module FvwmPager
++ "Go To Page 1"		GoToPage 0 0
++ "Go To Page 2"		GoToPage 1 0
++ "" 			Nop
+#+ "Audio Events On"			 Module FvwmEvent
++ "" 			Nop
++ "Restart"   Restart fvwm -f $HOME/.fvwm/fvwmrc
++ "Quit"      Module FvwmForm FvwmForm-QuitVerify
+
+DestroyMenu "ToolCustomize"
+AddToMenu "ToolCustomize" 
++ "Background Color" 	Popup ToolDesktopBg
++ "Edit Config File" 	Exec exec $[infostore.terminal] -n winterm -T Config -e vi ~/.fvwm/fvwmrc
++ "Edit XResources File" Exec exec $[infostore.terminal] -n winterm -T Xresources -e vi ~/.Xresources
++ "Apply XResources" 	Exec exec xrdb -load ~/.Xresources
+
+DestroyMenu "ToolDesktopBg"
+AddToMenu "ToolDesktopBg" 
++ "Indy"	Exec exec xsetroot -solid DodgerBlue3
++ "Crimson"	Exec exec xsetroot -solid SkyBlue4
++ "O2"		Exec exec xsetroot -solid SteelBlue4
++ "Indigo"	Exec exec xsetroot -solid RoyalBlue4
++ "Octane"	Exec exec xsetroot -solid DarkCyan
++ "Onyx"	Exec exec xsetroot -solid DarkSlateBlue
++ "Black"	Exec exec xsetroot -solid black
+
+DestroyMenu "ToolHelp"
+AddToMenu "ToolHelp" 
++ "X Man Viewer"		Exec exec xman
+
+DestroyMenu "ToolInternet"  
+AddToMenu "ToolInternet" 
++ "Web Browser"		Exec exec firefox
++ "Mail"		Exec exec $[infostore.terminal] -n Mail -e mutt
++ "Ftp Client"		Exec exec $[infostore.terminal] -n Ftp -e ncftp
+
+DestroyMenu "FvwMmenu"
+AddToMenu "FvwmMenu"
+#+ DynamicPopupAction PipeRead fvwm-menu-desktop
++ "XTerm"		Exec exec xterm
++ "Drawterm"		Exec exec drawterm -h coeus.antares-labs.eu -a mercury.antares-labs.eu -u rgl -p
++ "Lutris"		Exec exec lutris
++ "Audio Control"	Exec exec $[infostore.terminal] -g 80x40 -n "ALSA mixer" -T "ALSA mixer" -e alsamixer
+
+*Toolchest: Columns 1
+*Toolchest: Rows 6
+*Toolchest: BoxSize smart
+*Toolchest: Padding 11 0
+*Toolchest: Frame 1
+*Toolchest: Font "xft:Sans:Bold:pixelsize=12:antialias=false:Italic"
+*Toolchest: Colorset 11
+*Toolchest: ActiveColorset 8
+*Toolchest: ButtonGeometry 120x22+13+210
+*Toolchest: (Right, Icon toolIcon.xpm, Title (Side, Left) Desktop, Action (Mouse 1) \
+	`Menu ToolDesktop rectangle $widthx$height+$left+$top +$widthp-5p +1p`)
+*Toolchest: (Right, Title (Side, Left) Internet, Icon toolIcon.xpm Action (Mouse 1) \
+    	`Menu ToolInternet rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
+*Toolchest: (Right, Title (Side, Left) Applications, Icon toolIcon.xpm, Action (Mouse 1) \
+    	`Menu FvwmMenu rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
+*Toolchest: (Right, Title (Side, Left) Help, Icon toolIcon.xpm, Action (Mouse 1) \
+    	`Menu ToolHelp rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
+
+#
+# events
+#
+DestroyModuleConfig FvwmEvent: *
+
+# replace rplay by a sound player that can play .au sound file
+*FvwmEvent: Cmd "Exec exec aplay "
+
+*FvwmEvent: StartDelay 3
+*FvwmEvent: Delay 1
+*FvwmEvent: startup          "~/.fvwm/sounds/O2start.wav"
+*FvwmEvent: add_window       "~/.fvwm/sounds/start-app.wav"
+*FvwmEvent: destroy_window   "~/.fvwm/sounds/critical.wav"
+*FvwmEvent: iconify          "~/.fvwm/sounds/open-win.wav"
+*FvwmEvent: deiconify        "~/.fvwm/sounds/attention.wav"
+*FvwmEvent: windowshade      "~/.fvwm/sounds/start-app.wav"
+*FvwmEvent: dewindowshade    "~/.fvwm/sounds/attention.wav"
+
+
+#
+# simplest key bindings
+#
+Key F1 A CM Menu MenuFvwmRoot
+Key Tab A CM WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
+Key Left A CM GotoPage 0 0
+Key Right A CM GotoPage 1 0
+
+#
+# start additional applications and fvwm modules
+#
+AddToFunc StartFunction
++ I Module FvwmEvent
++ I Test (init) Exec exec xsetroot -solid DarkCyan
++ I Module FvwmButtons Toolchest
++ I Test (init) Exec exec rclock -geometry 150x150-5+5 -update 60 -fg black -bg \#a0a0a0
+#+ I Test (init) Exec exec xclock -digital -chime -geometry -0+0 -update 60 -fg black -bg \#a0a0a0 -face "xft:Sans:Bold:pixelsize=12:antialias=false"
+#+ I Test (init) Exec exec trayer --edge top --transparent 1 --widthtype request --align left --alpha 128 --tint 0xa0a0a0
++ I Module FvwmPager
+#+ I Test (init) Exec exec /usr/bin/xfce4-volumed
