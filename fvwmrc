@@ -243,6 +243,7 @@ AddToMenu WindowMenu
 + "Stick"		Stick
 + "Shade"		WindowShade North
 + "Ma&ximize"	Maximize 0 93
++ "Fullscreen"	Maximize Fullscreen
 + "I&dentify"	Module FvwmIdent
 + ""					Nop
 + "Kill Window"			Destroy
@@ -287,15 +288,11 @@ Style Toolchest HilightBorderColorSet 13
 DestroyMenu "ToolDesktop"
 AddToMenu "ToolDesktop" 
 + "Customize" 		Popup ToolCustomize
-+ "Open Unix Shell"	Exec exec $[infostore.terminal] -n winterm -T winterm -g 80x24
-+ "Open Admin Shell"	Exec exec $[infostore.terminal] -n Adminterm -T Adminterm -g 80x24 -bg \#440000 -fg \#eeeeee -e sudo -s /bin/mksh
++ "Open Unix Shell"	Exec exec $[infostore.terminal] -n winterm -T winterm -g 80x24 -ls
++ "Open Admin Shell"	Exec exec $[infostore.terminal] -n Adminterm -T Adminterm -g 80x24 -bg \#440000 -fg \#eeeeee -e su -
 + "Open 4Dwm Console" 	Module FvwmConsole
 #+ "Lock Desktop" 	Nop
-+ "" 			Nop
-+ "Pager"			 Module FvwmPager
-+ "Go To Page 1"		GoToPage 0 0
-+ "Go To Page 2"		GoToPage 1 0
-+ "" 			Nop
+#+ "" 			Nop
 #+ "Audio Events On"			 Module FvwmEvent
 + "" 			Nop
 + "Restart"   Restart fvwm -f $HOME/.fvwm/fvwmrc
@@ -318,23 +315,22 @@ AddToMenu "ToolDesktopBg"
 + "Onyx"	Exec exec xsetroot -solid DarkSlateBlue
 + "Black"	Exec exec xsetroot -solid black
 
+#DestroyMenu "FvwMmenu"
+#AddToMenu "FvwmMenu"
+#+ DynamicPopupAction PipeRead fvwm-menu-desktop
+
+DestroyMenu "ToolApplications"
+AddToMenu "ToolApplications"
++ "Term"		Exec exec xterm
++ "Drawterm"		Exec exec drawterm -h coeus.antares-labs.eu -a mercury.antares-labs.eu -u rgl
++ "Firefox"		Exec exec firefox
++ "Xpdf"		Exec exec xpdf
++ "Transmission"	Exec exec transmission-gtk
++ "Gimp"		Exec exec gimp
+
 DestroyMenu "ToolHelp"
 AddToMenu "ToolHelp" 
 + "X Man Viewer"		Exec exec xman
-
-DestroyMenu "ToolInternet"  
-AddToMenu "ToolInternet" 
-+ "Web Browser"		Exec exec firefox
-+ "Mail"		Exec exec $[infostore.terminal] -n Mail -e mutt
-+ "Ftp Client"		Exec exec $[infostore.terminal] -n Ftp -e ncftp
-
-DestroyMenu "FvwMmenu"
-AddToMenu "FvwmMenu"
-#+ DynamicPopupAction PipeRead fvwm-menu-desktop
-+ "XTerm"		Exec exec xterm
-+ "Drawterm"		Exec exec drawterm -h coeus.antares-labs.eu -a mercury.antares-labs.eu -u rgl -p
-+ "Lutris"		Exec exec lutris
-+ "Audio Control"	Exec exec $[infostore.terminal] -g 80x40 -n "ALSA mixer" -T "ALSA mixer" -e alsamixer
 
 *Toolchest: Columns 1
 *Toolchest: Rows 6
@@ -347,10 +343,8 @@ AddToMenu "FvwmMenu"
 *Toolchest: ButtonGeometry 120x22+13+210
 *Toolchest: (Right, Icon toolIcon.xpm, Title (Side, Left) Desktop, Action (Mouse 1) \
 	`Menu ToolDesktop rectangle $widthx$height+$left+$top +$widthp-5p +1p`)
-*Toolchest: (Right, Title (Side, Left) Internet, Icon toolIcon.xpm Action (Mouse 1) \
-    	`Menu ToolInternet rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
 *Toolchest: (Right, Title (Side, Left) Applications, Icon toolIcon.xpm, Action (Mouse 1) \
-    	`Menu FvwmMenu rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
+	`Menu ToolApplications rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
 *Toolchest: (Right, Title (Side, Left) Help, Icon toolIcon.xpm, Action (Mouse 1) \
     	`Menu ToolHelp rectangle $widthx$height+$left+$top  +$widthp-5p +1p`)
 
@@ -360,7 +354,7 @@ AddToMenu "FvwmMenu"
 DestroyModuleConfig FvwmEvent: *
 
 # replace rplay by a sound player that can play .au sound file
-*FvwmEvent: Cmd "Exec exec aplay "
+*FvwmEvent: Cmd "Exec exec play "
 
 *FvwmEvent: StartDelay 3
 *FvwmEvent: Delay 1
@@ -386,9 +380,11 @@ Key Right A CM GotoPage 1 0
 #
 AddToFunc StartFunction
 + I Module FvwmEvent
-+ I Test (init) Exec exec xsetroot -solid DarkCyan
++ I Test (init) Exec exec xsetroot -solid SkyBlue4
 + I Module FvwmButtons Toolchest
 + I Test (init) Exec exec rclock -geometry 150x150-5+5 -update 60 -fg black -bg \#a0a0a0
++ I Test (init) Exec exec $[infostore.terminal] -n winterm -T winterm -g 122x64+1155+35 -ls -e top -SHPaw
++ I Test (init) Exec exec $[infostore.terminal] -n Adminterm -T Adminterm -g 132x48+230+46 -bg \#440000 -fg \#eeeeee -e su -
 #+ I Test (init) Exec exec xclock -digital -chime -geometry -0+0 -update 60 -fg black -bg \#a0a0a0 -face "xft:Sans:Bold:pixelsize=12:antialias=false"
 #+ I Test (init) Exec exec trayer --edge top --transparent 1 --widthtype request --align left --alpha 128 --tint 0xa0a0a0
 + I Module FvwmPager
